@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>ST QC</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Eva, Linnea and Zaneta" />
+    <link href="Presentation_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="Presentation_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# ST QC
+### Eva, Linnea and Zaneta
+### 6/20/2019
+
+---
+
+
+
+
+# Spatial Transcriptomics Data
+
+
+- RNA-seq based method 
+- No individual cells -&gt; spots with probes under tissue 
+  - 1 spot ~ 30 cells
+  - + Spatial info (coordinates)
+  
+---
+
+# ST DATA
+
+
+Sequencing -&gt; QFilter, Mapping and Annotation -&gt; .tsv files
+
+ - rownames:Ensembl gene names
+ - colnames:Spot coordinates
+
+ 
+Spots_under_tissueselection matrix -&gt; .tsv file spot coordinates of spots under tissue
+
+---
+# First part of ST.QC
+
+
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```
+## 
+## Attaching package: 'data.table'
+```
+
+```
+## The following objects are masked from 'package:reshape2':
+## 
+##     dcast, melt
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, first, last
+```
+
+```
+## 
+## Attaching package: 'gridExtra'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+```
+
+```
+##                   10x11 10x12 10x13 10x14
+## ENSG00000279457.3     1     0     0     0
+## ENSG00000225972.1     0     0     0     1
+## ENSG00000225630.1     0     0     0     0
+## ENSG00000237973.1     0     0     0     0
+```
+
+```
+##     x y new_x new_y pixel_x pixel_y
+## 1x5 1 5  0.97  5.06   122.4   689.8
+## 1x6 1 6  0.97  6.05   123.2   833.8
+## 1x7 1 7  1.03  7.09   131.4   985.2
+## 1x8 1 8  1.02  8.07   130.6  1127.5
+```
+
+---
+
+# Filtering and Subsetting the Data
+
+
+
+```
+## Number of genes in raw dataset:  28133 
+## Number of genes in subset dataset:  25836 
+## Number of spots in raw dataset:  990 
+## Number of spots in subset dataset:  833
+```
+---
+
+# Converting gene ids and sorting
+
+
+
+```
+##               10x11 10x12 10x13 10x14 10x16
+## FO538757.1        1     0     0     0     0
+## MTND1P23          0     0     0     1     0
+## MTND2P28          0     0     0     0     0
+## MTCO1P12          0     0     0     0     0
+## MTCO2P12          0     0     0     0     0
+## MTATP8P1          0     1     0     0     0
+## MTATP6P1          2     4     0     0     0
+## MTCO3P12          0     0     0     0     0
+## RP11-206L10.8     0     0     0     0     0
+## LINC00115         0     0     0     0     0
+## LINC01128         0     0     0     0     0
+## RP11-54O7.1       0     0     0     0     0
+## RP11-54O7.3       0     0     0     0     0
+## SAMD11            0     0     0     0     0
+## NOC2L             0     0     0     0     0
+```
+---
+
+# Histo_Unique Function
+
+
+
+```
+## Warning: Deprecated, use tibble::rownames_to_column() instead.
+```
+
+![](Presentation_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+---
+
+# Final Thoughts
+
+
+![Final](horse.jpg)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

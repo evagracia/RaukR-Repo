@@ -4,6 +4,8 @@ author: Eva, Linnea and Zaneta
 date: 190620
 autosize: true
 
+
+
 Spatial Transcriptomics Data
 ========================================================
 
@@ -62,29 +64,22 @@ Converting gene ids and sorting
 
 
 ```
-# A tibble: 35 x 2
-   biotype                            content
-   <fct>                                <dbl>
- 1 protein_coding                     2784128
- 2 Mt_rRNA                             269126
- 3 lincRNA                              42859
- 4 antisense                            21169
- 5 processed_pseudogene                 18346
- 6 processed_transcript                  9641
- 7 Mt_tRNA                               6005
- 8 TEC                                   4123
- 9 snRNA                                 3968
-10 transcribed_unprocessed_pseudogene    2475
-# … with 25 more rows
-```
-
-```
-           10x11 10x12 10x13 10x14 10x16
-FO538757.1     1     0     0     0     0
-MTND1P23       0     0     0     1     0
-MTND2P28       0     0     0     0     0
-MTCO1P12       0     0     0     0     0
-MTCO2P12       0     0     0     0     0
+              10x11 10x12 10x13 10x14 10x16
+FO538757.1        1     0     0     0     0
+MTND1P23          0     0     0     1     0
+MTND2P28          0     0     0     0     0
+MTCO1P12          0     0     0     0     0
+MTCO2P12          0     0     0     0     0
+MTATP8P1          0     1     0     0     0
+MTATP6P1          2     4     0     0     0
+MTCO3P12          0     0     0     0     0
+RP11-206L10.8     0     0     0     0     0
+LINC00115         0     0     0     0     0
+LINC01128         0     0     0     0     0
+RP11-54O7.1       0     0     0     0     0
+RP11-54O7.3       0     0     0     0     0
+SAMD11            0     0     0     0     0
+NOC2L             0     0     0     0     0
 ```
 
 Histo_Unique Function
@@ -92,10 +87,8 @@ Histo_Unique Function
 
 ![plot of chunk unnamed-chunk-4](STQCPresentation-figure/unnamed-chunk-4-1.png)
 
-```
-TableGrob (2 x 1) "arrange": 2 grobs
-  z     cells    name           grob
-1 1 (1-1,1-1) arrange gtable[layout]
-2 2 (2-2,1-1) arrange gtable[layout]
-```
+Final Thoughts
+==========================================================
+
+![Final](horse.jpg)
 

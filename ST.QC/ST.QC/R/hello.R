@@ -70,6 +70,7 @@ rownames(S1_subset) <- ensids[rownames(S1_subset), ]$gene_name
 remove_genes_S1 <- c(grep(pattern = "^MTRNR", value = T, x = rownames(S1_subset)), "MALAT1")
 S1_subset <- S1_subset[!rownames(S1_subset) %in% remove_genes_S1, ]
 }
+Histo_unique()
 
 #'Histogram function
 #'Histograms of unique transcripts and genes 
