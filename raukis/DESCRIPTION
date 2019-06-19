@@ -1,0 +1,21 @@
+Package: raukis
+Type: Package
+Title: triangulo de la muerte
+Version: 0.1.0
+Author: not me 
+Maintainer: kjhkhik <me@visby.se>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: CC0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    reshape2,
+    Rcpp
+LinkingTo: 
+    Rcpp

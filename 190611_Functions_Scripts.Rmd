@@ -1,0 +1,171 @@
+---
+title: "190611_Functions_Scripts"
+author: "Eva Gracia Villacampa"
+date: "6/11/2019"
+output: 
+  html_document:
+    number_sections: TRUE
+---
+#R Functions
+Let’s jump right in and create a function. Your function should have it’s own function_name, atleast two arguments one of which with a default value, code that performs some operations on the input and a return value. I do encourage you to think about it and make your own function, rather than copying the examples. Examples should be seen more as explanatory and inspirational.
+
+
+
+```{r}
+
+abc <- matrix(c(3, 5, 2, 6 ,7, 3), nrow = 3,ncol = 2)
+
+efg <- matrix(c(3, 0, 4, 6, 7, 2), nrow = 3, ncol= 2)
+                  
+matrixdiff <- function(abc, efg) {
+    product <- abc - efg
+    product
+}
+
+matrixdiff(abc,efg)
+
+#Example:
+
+function_name <- function(arg1, arg2 = "Lucy"){
+  if (arg2 == "Lucy") {
+    output <- paste("Lucy in the sky with ",arg1,"\n",sep="")}
+  else {
+    output <- paste(arg1," in the ocean with ",arg2,"\n",sep="")}
+  return(cat(output))
+}
+function_name("diamonds","Lucy")
+function_name("diamonds","Pepita")
+
+
+
+```
+
+est your function to make sure it gives the output you would expect given different arguments.
+
+What happens if you don’t assign a value to the argument that does not have a default?
+Did I need to use the return() function in my example?
+Why does my example perform the cat() function in the return() function?
+Try assigning a variable to the return value of your function. variable_a <- function_name("Tom") What happens to the variable if the return value is the output of cat()?
+Now lets see the power of your function in action. Write a loop that executes your function multiple times. Functions are great for performing operations on a number of files, objects or elements in objects that fit a certain condition.
+
+Example
+Now let’s take a look at the special ellipsis argument for functions. Basically the ellipsis say that a function can take additional arguments. The function should work without arguments given at the ellipsis. One great example of this is the data.frame() function.
+
+From ?data.frame
+```{r}
+df1 <- data.frame(a=c(1,2,3))
+df2 <- data.frame(a=c(1,2,3),b=c(4,5,6))
+df1
+df2
+
+
+```
+
+
+Another example where ellipsis are often used is to pass plot arguments into a function.
+
+Example
+```{r}
+my_plot <- function(...){
+  plot(c(1,2,3),c(1,2,3),...)
+}
+
+my_plot(main="Great title", xlab = "This will be x-label of plot", ylab="Y label")
+
+
+```
+
+
+#R Scripts
+
+While many R users write and execute code interactively (in e.g. RStudio), you can run the content of a script by writing source(myscriptfile.R) in the R console. This is also a convenient way to load your custom functions (and this is actually what happens when you load an installed package with library()).
+
+But once you have code that works you may want to run it routinely without an interactive R environment. R scripts can be executed directly from the command line by typing Rscript myscriptfile.R.
+
+Make an R script that prints a summary of a sample (n=1000) from a normal distribution. Save it as a .R file and execute it.
+```{r}
+```
+
+#3 Passing and parsing arguments
+
+It’s unlikely that you would need to run the exact same process over and over again without any change in what data is processed or how it’s processed. One way to control the behaviour of your code is to provide arguments to it. These commonly refer to file names or settings. You can supply arguments after the name of your script where you invoke it. In R, they are available from commandArgs().
+
+Let your script print the arguments. Run it with a few extra words or numbers and see what happens.
+You can use commandArgs(trailingOnly = TRUE) to suppress the first few items and access your actual arguments.
+
+Make your script use the first argument provided as the mean of the normal distribution.
+
+```{r}
+#!/usr/bin/env Rscript
+firstarg=as.numeric(commandArgs(trailingOnly = TRUE)[1])
+mydata=rnorm(1000,mean = firstarg)
+print(summary(mydata))
+
+```
+
+
+
+```{r}
+install.packages("magrittr")
+library(magrittr)
+install.packages("dplyr")
+library(dplyr)
+install.packages("tibble")
+library(tibble)
+library(tidyverse)
+myname <- "Eva"
+ipt <- installed.packages() %>% 
+  as_tibble() %>% 
+  select(Package) %>% 
+  mutate(name <- myname)
+
+write_csv(path = here("data", paste0(myname,"_installed_packages.csv")))
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+
+```
