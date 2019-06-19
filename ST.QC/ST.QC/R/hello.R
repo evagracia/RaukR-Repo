@@ -111,3 +111,5 @@ subset_data <- function(data, alignment) {
   cat("Number of spots in subset dataset: ", ncol(data_subset), "\n\n")
   return(data_subset)
 }
+
+#Did we mess everything up?
