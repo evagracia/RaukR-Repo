@@ -16,7 +16,6 @@ library(rmarkdown)
 library(reshape2)
 library(Rcpp)
 library(data.table)
-library(Seurat)
 library(Matrix)
 library(gridExtra)
 
@@ -25,19 +24,19 @@ library(gridExtra)
 tsv_file <- "/Users/evagracia/AZKManuscript/tsv files/190415_Kidney_EXP1_NHK1_D2_stdata.tsv"
 alignment_file <- "/Users/evagracia/AZKManuscript/selection files/spot_data-selection-EXP1_NHK1_D2.tsv"
 
-# Read the tsv files using data.table package
+# Read the tsv file, make a data frame and transpose it
 
 S1 <- t(data.frame(fread(input = tsv_file, sep = "\t", header = T), row.names = 1))
 
 # Reading the alignment_file
 S1_alignment <- read.table(file = alignment_file, header = T, stringsAsFactors = F)
-head(S1_alignment)
+
 
 #set the rownames of the alignment tables to the x, y coordinates separated by "x" so that they match the column names of the expression datasets.
 
 rownames(S1_alignment) <- paste(S1_alignment$x, S1_alignment$y, sep = "x")
 
-head(S1_alignment)
+
 
 
 
@@ -48,7 +47,8 @@ S1_subset <- subset_data(S1, S1_alignment)
 
 # convert and sort by gene type in descending order
 
-sort(table(ensids[rownames(S1_subset), ]$gene_type), decreasing = T)
+sorted_data <- sort(table(ensids[rownames(S1_subset), ]$gene_type), decreasing = T)
+print(sorted_data)
 # Create data.frame with gene counts, gene id and biotype
 
 
@@ -69,8 +69,13 @@ rownames(S1_subset) <- ensids[rownames(S1_subset), ]$gene_name
 # We remove mitochondrial genes and MALAT1 ( hosekeeping)
 remove_genes_S1 <- c(grep(pattern = "^MTRNR", value = T, x = rownames(S1_subset)), "MALAT1")
 S1_subset <- S1_subset[!rownames(S1_subset) %in% remove_genes_S1, ]
+}
 
+#'Histogram function
+#'Histograms of unique transcripts and genes 
+#'@export
 # We make a df. Unique genes per spot. Unique transcripts per spot
+Histo_unique <- function(){
 S1_df <- as.data.frame(S1_subset)
 unique.genes <- apply(S1_df, 2, function(x) sum(x > 0))
 unique.transcripts <- colSums(S1_df)
@@ -111,5 +116,3 @@ subset_data <- function(data, alignment) {
   cat("Number of spots in subset dataset: ", ncol(data_subset), "\n\n")
   return(data_subset)
 }
-
-#Did we mess everything up?

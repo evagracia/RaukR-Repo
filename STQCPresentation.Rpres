@@ -1,0 +1,94 @@
+ST Quality Control
+========================================================
+author: Eva, Linnea and Zaneta
+date: 190620
+autosize: true
+
+Spatial Transcriptomics Data
+========================================================
+
+- RNA-seq based method 
+- No individual cells -> spots with probes under tissue 
+  - 1 spot ~ 30 cells
+  - + Spatial info (coordinates)
+
+
+ST DATA
+========================================================
+
+Sequencing -> QFilter, Mapping and Annotation -> .tsv files
+
+ - rownames:Ensembl gene names
+ - colnames:Spot coordinates
+
+ 
+Spots_under_tissueselection matrix -> .tsv file spot coordinates of spots under tissue
+
+First part of ST.QC
+========================================================
+
+```{r, echo=FALSE}
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+library(devtools)
+library(usethis)
+library(roxygen2)
+library(knitr)
+library(rmarkdown)
+library(reshape2)
+library(Rcpp)
+library(data.table)
+library(Matrix)
+library(gridExtra)
+#load data
+tsv_file <- "/Users/evagracia/AZKManuscript/tsv files/190415_Kidney_EXP1_NHK1_D2_stdata.tsv"
+alignment_file <- "/Users/evagracia/AZKManuscript/selection files/spot_data-selection-EXP1_NHK1_D2.tsv"
+
+# Read the tsv file, make a data frame and transpose it
+S1 <- t(data.frame(fread(input = tsv_file, sep = "\t", header = T), row.names = 1))
+# Reading the alignment_file
+S1_alignment <- read.table(file = alignment_file, header = T, stringsAsFactors = F)
+S1[1:4,1:4]
+#set the rownames of the alignment tables to the x, y coordinates separated by "x" so that they match the column names of the expression datasets.
+
+rownames(S1_alignment) <- paste(S1_alignment$x, S1_alignment$y, sep = "x")
+S1_alignment[1:4,1:6]
+```
+
+
+
+Filtering and Subsetting the Data
+========================================================
+
+```{r, echo=FALSE}
+#set the rownames of the alignment tables to the x, y coordinates separated by "x" so that they match the column names of the expression datasets.
+
+rownames(S1_alignment) <- paste(S1_alignment$x, S1_alignment$y, sep = "x")
+
+subset_data <- function(data, alignment) {
+  # Subset expression dataset using intersect
+  data_subset <- data[, intersect(colnames(data), rownames(alignment))]
+  
+  # Make sure that genes with 0 expression are removed
+  data_subset <- data_subset[rowSums(data_subset) > 0, ]
+  
+  # Remove ambiguous genes
+  remove_genes <- grep(pattern = "ambiguous", x = rownames(data_subset), value = T)
+  data_subset <- data_subset[!rownames(data_subset) %in% remove_genes, ]
+  
+  # Print some messages
+  cat("Number of genes in raw dataset: ", nrow(data), "\n")
+  cat("Number of genes in subset dataset: ", nrow(data_subset), "\n")
+  cat("Number of spots in raw dataset: ", ncol(data), "\n")
+  cat("Number of spots in subset dataset: ", ncol(data_subset), "\n\n")
+  return(data_subset)
+}
+
+# Now we use the function subset_data in our expression matrix
+S1_subset <- subset_data(S1, S1_alignment)
+
+```
+
+
+========================================================
